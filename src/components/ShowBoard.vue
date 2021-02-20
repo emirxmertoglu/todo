@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import firebase from "./firebase";
+import firebase from "../firebase";
 import router from "../router/index";
 
 export default {
