@@ -1,4 +1,5 @@
 # todo
+A Todo App with Vue2, Vue Router, Firebase and Bootstrap-Vue
 
 ## Project setup
 ```
