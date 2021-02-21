@@ -5,7 +5,7 @@ import BoardList from '@/components/BoardList'
 import ShowBoard from '@/components/ShowBoard'
 import AddBoard from '@/components/AddBoard'
 import EditBoard from '@/components/EditBoard'
-
+import NotFound from '@/components/NotFound'
 
 Vue.use(VueRouter)
 
@@ -29,6 +29,11 @@ const routes = [
     path: '/edit-board/:id',
     name: 'EditBoard',
     component: EditBoard
+  },
+  {
+    path: '*',
+    name: 'NotFound',
+    component: NotFound
   }
 ]
 
