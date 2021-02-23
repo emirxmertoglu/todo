@@ -74,7 +74,7 @@ export default {
             this.$router.push({ name: "BroadList" });
           })
           .catch((err) => {
-            console.log(err);
+            alert("Opps! " + err);
           });
       } else {
         this.showAlert = true;

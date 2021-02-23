@@ -43,7 +43,7 @@ export default {
             this.$router.push({ name: "BoardList" });
           },
           (err) => {
-            alert("Opps.") + err;
+            alert("Opps! ") + err;
           }
         );
     },
