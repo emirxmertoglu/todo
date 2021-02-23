@@ -28,8 +28,18 @@ export default {
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
         .then(
-          () => {
+          (userCredential) => {
             alert("Your acoount has been created!");
+
+            firebase
+              .firestore()
+              .collection("users")
+              .doc(userCredential.user.uid)
+              .set({
+                email: userCredential.user.email,
+                createdTime: Date.now(),
+              });
+
             this.$router.push({ name: "BoardList" });
           },
           (err) => {

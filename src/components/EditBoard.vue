@@ -1,75 +1,87 @@
 <template>
-  <b-row>
-    <b-col cols="12">
-      <h2>
-        Edit Board
-        <router-link :to="{ name: 'ShowBoard', params: { id: key } }"
-          >(Show Board)</router-link
-        >
-      </h2>
-      <b-jumbotron>
-        <b-form @submit="onSubmit">
-          <b-form-group
-            id="titleGroup"
-            horizontal
-            :label-cols="4"
-            breakpoint="md"
-            label="Enter Title"
+  <div class="main">
+    <Navbar />
+    <b-row>
+      <b-col cols="12">
+        <h2>
+          Edit Board
+          <router-link :to="{ name: 'ShowBoard', params: { id: key } }"
+            >(Show Board)</router-link
           >
-            <b-form-input id="title" v-model.trim="board.title"></b-form-input>
-          </b-form-group>
-          <b-form-group
-            id="descGroup"
-            horizontal
-            :label-cols="4"
-            breakpoint="md"
-            label="Enter Description"
-          >
-            <b-form-textarea
-              id="description"
-              v-model="board.description"
-              placeholder="Enter something"
-              :rows="2"
-              :max-rows="6"
-              >{{ board.description }}</b-form-textarea
+        </h2>
+        <b-jumbotron>
+          <b-form @submit="onSubmit">
+            <b-form-group
+              id="titleGroup"
+              horizontal
+              :label-cols="4"
+              breakpoint="md"
+              label="Enter Title"
             >
-          </b-form-group>
-          <b-form-group
-            id="authorGroup"
-            horizontal
-            :label-cols="4"
-            breakpoint="md"
-            label="Enter Author"
-          >
-            <b-form-input
-              id="author"
-              v-model.trim="board.author"
-            ></b-form-input>
-          </b-form-group>
-          <b-button type="submit" variant="primary">Update</b-button>
-        </b-form>
-      </b-jumbotron>
-    </b-col>
-  </b-row>
+              <b-form-input
+                id="title"
+                v-model.trim="board.title"
+              ></b-form-input>
+            </b-form-group>
+            <b-form-group
+              id="descGroup"
+              horizontal
+              :label-cols="4"
+              breakpoint="md"
+              label="Enter Description"
+            >
+              <b-form-textarea
+                id="description"
+                v-model="board.description"
+                placeholder="Enter something"
+                :rows="2"
+                :max-rows="6"
+                >{{ board.description }}</b-form-textarea
+              >
+            </b-form-group>
+            <b-form-group
+              id="authorGroup"
+              horizontal
+              :label-cols="4"
+              breakpoint="md"
+              label="Enter Author"
+            >
+              <b-form-input
+                id="author"
+                v-model.trim="board.author"
+              ></b-form-input>
+            </b-form-group>
+            <b-button type="submit" variant="primary">Update</b-button>
+          </b-form>
+        </b-jumbotron>
+      </b-col>
+    </b-row>
+  </div>
 </template>
 
 <script>
 import firebase from "../firebase";
 import router from "../router/index";
+import Navbar from "./Navbar";
 
 export default {
   name: "EditBoard",
+  components: { Navbar },
   data() {
     return {
       key: this.$route.params.id,
       board: {},
+      currentUserUID: firebase.auth().currentUser.uid,
     };
   },
   created() {
     const ref = firebase
       .firestore()
+      .collection("users")
+      .doc(this.currentUserUID)
       .collection("boards")
       .doc(this.$route.params.id);
+
     ref.get().then((doc) => {
       if (doc.exists) {
         this.board = doc.data();
@@ -81,10 +93,14 @@ export default {
   methods: {
     onSubmit(evt) {
       evt.preventDefault();
+
       const updateRef = firebase
         .firestore()
+        .collection("users")
+        .doc(this.currentUserUID)
         .collection("boards")
         .doc(this.$route.params.id);
+
       updateRef
         .set(this.board)
         .then((docRef) => {

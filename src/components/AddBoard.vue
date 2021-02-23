@@ -1,72 +1,84 @@
 <template>
-  <b-row>
-    <b-col cols="12">
-      <h2>
-        Add Board
-        <b-link href="/">(Board List)</b-link>
-      </h2>
-      <b-jumbotron>
-        <b-form @submit="onSubmit">
-          <b-form-group
-            id="titleGroup"
-            horizontal
-            :label-cols="4"
-            breakpoint="md"
-            label="Enter Title"
-          >
-            <b-form-input id="title" v-model.trim="board.title"></b-form-input>
-          </b-form-group>
-          <b-form-group
-            id="descGroup"
-            horizontal
-            :label-cols="4"
-            breakpoint="md"
-            label="Enter Description"
-          >
-            <b-form-textarea
-              id="description"
-              v-model="board.description"
-              placeholder="Enter something"
-              :rows="2"
-              :max-rows="6"
-              >{{ board.description }}</b-form-textarea
+  <div class="main">
+    <Navbar />
+    <b-row>
+      <b-col cols="12">
+        <h2>
+          Add Board
+          <b-link href="/">(Board List)</b-link>
+        </h2>
+        <b-jumbotron>
+          <b-form @submit="onSubmit">
+            <b-form-group
+              id="titleGroup"
+              horizontal
+              :label-cols="4"
+              breakpoint="md"
+              label="Enter Title"
             >
-          </b-form-group>
-          <b-form-group
-            id="authorGroup"
-            horizontal
-            :label-cols="4"
-            breakpoint="md"
-            label="Enter Author"
-          >
-            <b-form-input
-              id="author"
-              v-model.trim="board.author"
-            ></b-form-input>
-          </b-form-group>
-          <b-button type="submit" variant="primary">Save</b-button>
-        </b-form>
-      </b-jumbotron>
-    </b-col>
-  </b-row>
+              <b-form-input
+                id="title"
+                v-model.trim="board.title"
+              ></b-form-input>
+            </b-form-group>
+            <b-form-group
+              id="descGroup"
+              horizontal
+              :label-cols="4"
+              breakpoint="md"
+              label="Enter Description"
+            >
+              <b-form-textarea
+                id="description"
+                v-model="board.description"
+                placeholder="Enter something"
+                :rows="2"
+                :max-rows="6"
+                >{{ board.description }}</b-form-textarea
+              >
+            </b-form-group>
+            <b-form-group
+              id="authorGroup"
+              horizontal
+              :label-cols="4"
+              breakpoint="md"
+              label="Enter Author"
+            >
+              <b-form-input
+                id="author"
+                v-model.trim="board.author"
+              ></b-form-input>
+            </b-form-group>
+            <b-button type="submit" variant="primary">Save</b-button>
+          </b-form>
+        </b-jumbotron>
+      </b-col>
+    </b-row>
+  </div>
 </template>
 
 <script>
 import firebase from "../firebase";
 import router from "../router/index";
+import Navbar from "./Navbar";
 
 export default {
   name: "AddBoard",
+  components: { Navbar },
   data() {
     return {
-      ref: firebase.firestore().collection("boards"),
+      ref: firebase.firestore().collection("users"),
       board: {},
+      currentUserUID: firebase.auth().currentUser.uid,
     };
   },
   methods: {
     onSubmit(evt) {
       evt.preventDefault();
+
       this.ref
+        .doc(this.currentUserUID)
+        .collection("boards")
         .add(this.board)
         .then((docRef) => {
           console.log(docRef);

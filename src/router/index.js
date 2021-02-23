@@ -9,6 +9,7 @@ import EditBoard from '@/components/EditBoard'
 import NotFound from '@/components/NotFound'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
+import Profile from '@/components/Profile'
 
 Vue.use(VueRouter)
 
@@ -51,6 +52,14 @@ const routes = [
     path: '/edit-board/:id',
     name: 'EditBoard',
     component: EditBoard,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile,
     meta: {
       requiresAuth: true
     }

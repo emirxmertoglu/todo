@@ -31,6 +31,7 @@ export default {
         .then(
           () => {
             alert("You are now connected!");
+
             this.$router.push({ name: "BoardList" });
           },
           (err) => {
