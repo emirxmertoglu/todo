@@ -1,7 +1,7 @@
 <template>
   <div class="navbar-main">
     <b-navbar toggleable="lg" type="dark" variant="primary">
-      <b-navbar-brand href="/">Trello Board</b-navbar-brand>
+      <b-navbar-brand :to="{ name: 'BroadList' }">Trello Board</b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <!-- Right aligned nav items -->
