@@ -3,7 +3,7 @@
     <h3>Sign In</h3>
     <input type="email" placeholder="Email" v-model="email" />
     <input type="password" placeholder="Password" v-model="password" />
-    <button @click="login">Connection</button>
+    <b-button variant="dark" @click="login">Connection</b-button>
     <p>
       You don't have an account? You can
       <router-link :to="{ name: 'Register' }">create</router-link>

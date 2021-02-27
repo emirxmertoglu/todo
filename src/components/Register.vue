@@ -3,7 +3,7 @@
     <h3>Sign Up</h3>
     <input type="email" placeholder="Email" v-model="email" />
     <input type="password" placeholder="Password" v-model="password" />
-    <button @click="signUp">Sign Up</button>
+    <b-button variant="dark" @click="signUp">Sign Up</b-button>
     <p>
       Back to
       <router-link :to="{ name: 'Login' }">login</router-link>.
@@ -27,25 +27,23 @@ export default {
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
-        .then(
-          (userCredential) => {
-            alert("Your acoount has been created!");
+        .then((userCredential) => {
+          alert("Your acoount has been created!");
 
-            firebase
-              .firestore()
-              .collection("users")
-              .doc(userCredential.user.uid)
-              .set({
-                email: userCredential.user.email,
-                createdTime: Date.now(),
-              });
+          firebase
+            .firestore()
+            .collection("users")
+            .doc(userCredential.user.uid)
+            .set({
+              email: userCredential.user.email,
+              createdTime: Date.now(),
+            });
 
-            this.$router.push({ name: "BoardList" });
-          },
-          (err) => {
-            alert("Opps! ") + err;
-          }
-        );
+          this.$router.push({ name: "BoardList" });
+        })
+        .catch((err) => {
+          alert("Opps! Error: " + err.message);
+        });
     },
   },
 };
