@@ -6,7 +6,7 @@
     <button @click="signUp">Sign Up</button>
     <p>
       Back to
-      <router-link :to="{ name: 'Login' }">login</router-link>
+      <router-link :to="{ name: 'Login' }">login</router-link>.
     </p>
   </div>
 </template>
@@ -61,7 +61,6 @@ export default {
 
 input {
   margin: 10px 0;
-  width: 25%;
   padding: 10px;
   border: none;
   border-radius: 10px;
@@ -71,7 +70,6 @@ input {
 
 button {
   margin-top: 20px;
-  width: 15%;
   cursor: pointer;
   padding: 10px;
   border: none;
@@ -86,5 +84,15 @@ p {
 p a {
   text-decoration: underline;
   cursor: pointer;
+}
+
+@media screen and (min-width: 900px) {
+  input {
+    width: 350px;
+  }
+
+  button {
+    width: 200px;
+  }
 }
 </style>
