@@ -1,5 +1,5 @@
 # todo
-A Kanban Board Todo App with Vue2, Vue Router, Firebase and Bootstrap-Vue
+A Kanban Board Todo App with Vue.Js 2, Vue Router, Firebase and Bootstrap-Vue
 
 ## Project setup
 ```
