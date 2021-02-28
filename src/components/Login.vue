@@ -28,16 +28,14 @@ export default {
       firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
-        .then(
-          () => {
-            alert("You are now connected!");
+        .then(() => {
+          alert("You are now connected!");
 
-            this.$router.push({ name: "BoardList" });
-          },
-          (err) => {
-            alert("Opps! " + err);
-          }
-        );
+          this.$router.push({ name: "BoardList" });
+        })
+        .catch((err) => {
+          alert("Opps! Error: " + err.message);
+        });
     },
   },
 };
